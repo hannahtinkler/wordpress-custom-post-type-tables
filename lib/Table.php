@@ -4,9 +4,22 @@ namespace CptTables\Lib;
 
 class Table
 {
+    /**
+     * @var Db
+     */
     private $db;
+
+    /**
+     * @var string
+     */
     private $table;
 
+    /**
+     * Triggers the create methods for tables
+     * @param Db     $db
+     * @param array  $config
+     * @param string $table
+     */
     public function __construct(Db $db, array $config, string $table)
     {
         $this->db = $db;
@@ -17,6 +30,12 @@ class Table
         $this->createMetaTable();
     }
 
+    /**
+     * Creates the new post table for the custom post type, basing the structure
+     * on wp_posts
+     *
+     * @return void
+     */
     private function createPostTable()
     {
         $this->db->query(
@@ -28,6 +47,12 @@ class Table
         );
     }
 
+    /**
+     * Creates the new postmeta table for the custom post type, basing the
+     * structure on wp_postmeta
+     *
+     * @return void
+     */
     private function createMetaTable()
     {
         $this->db->query(

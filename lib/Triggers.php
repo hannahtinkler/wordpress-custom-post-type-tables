@@ -4,11 +4,32 @@ namespace CptTables\Lib;
 
 class Triggers
 {
+    /**
+     * @var Db
+     */
     private $db;
+
+    /**
+     * @var array
+     */
     private $config;
+
+    /**
+     * @var string
+     */
     private $postsTrigger = 'custom_post_copy';
+
+    /**
+     * @var string
+     */
     private $metaTrigger = 'custom_meta_copy';
 
+    /**
+     * Triggers the methods that create the post and post meta triggers
+     *
+     * @param Db    $db
+     * @param array $config
+     */
     public function __construct(Db $db, array $config)
     {
         $this->db = $db;
@@ -18,6 +39,12 @@ class Triggers
         $this->createMetaTrigger();
     }
 
+    /**
+     * Creates a trigger on the new custom post type table that copies each new
+     * row of data from the posts table to the custom table
+     *
+     * @return void
+     */
     private function createPostTrigger()
     {
         $query = sprintf(
@@ -47,6 +74,12 @@ class Triggers
         $this->db->query($query);
     }
 
+    /**
+     * Creates a trigger on the new custom post type meta table that copies each
+     * new row of data from the post meta table to the custom meta table
+     *
+     * @return void
+     */
     private function createMetaTrigger()
     {
         $query = sprintf(

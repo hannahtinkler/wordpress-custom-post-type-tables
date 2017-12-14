@@ -30,7 +30,7 @@ class Core
     /**
      * @return void
      */
-    public static function load()
+    public function load()
     {
         $self = new self();
 
@@ -72,7 +72,7 @@ class Core
     /**
      * @return void
      */
-    public static function activate()
+    public function activate()
     {
         flush_rewrite_rules();
     }
@@ -80,7 +80,7 @@ class Core
     /**
      * @return void
      */
-    public static function deactivate()
+    public function deactivate()
     {
         flush_rewrite_rules();
     }

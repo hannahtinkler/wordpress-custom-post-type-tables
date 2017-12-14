@@ -4,6 +4,22 @@ namespace CptTables\Lib;
 
 class QueryFilters
 {
+    /**
+     * @var Db
+     */
+    private $db;
+
+    /**
+     * @var array
+     */
+    private $config;
+
+    /**
+     * Binds the method that changes tables in the query to the query filter
+     *
+     * @param Db    $db
+     * @param array $config
+     */
     public function __construct(Db $db, array $config)
     {
         $this->db = $db;
@@ -12,6 +28,13 @@ class QueryFilters
         add_filter('query', [$this, 'updateQueryTables']);
     }
 
+    /**
+     * If the query is for a post type that has custom tables set up, replace
+     * the post and meta tables with the custom ones
+     *
+     * @param  string $query
+     * @return string
+     */
     public function updateQueryTables(string $query)
     {
         $table = $this->determineTable($query);
@@ -24,6 +47,13 @@ class QueryFilters
         return $query;
     }
 
+    /**
+     * Tries to parse the post type from the query. If not possible, parses the
+     * ID and uses it to look up the post type in the wp_posts table
+     *
+     * @param  string $query
+     * @return string
+     */
     private function determineTable(string $query)
     {
         if ($table = $this->getPostTypeFromQuery($query)) {
@@ -32,20 +62,6 @@ class QueryFilters
 
         if ($table = $this->lookupPostTypeInDatabase($query)) {
             return $table;
-        }
-    }
-
-    /**
-     * Grabs the post id from the query and looks up the post type for this id
-     * in the wp_posts table
-     *
-     * @param  string $query
-     * @return string|null
-     */
-    public function lookupPostTypeInDatabase(string $query)
-    {
-        if ($ids = $this->getPostIdsFromQuery($query)) {
-            return $this->getPostTypeById($ids);
         }
     }
 
@@ -61,6 +77,20 @@ class QueryFilters
 
         if ($postType = array_pop($postType)) {
             return $postType;
+        }
+    }
+
+    /**
+     * Grabs the post id from the query and looks up the post type for this id
+     * in the wp_posts table
+     *
+     * @param  string $query
+     * @return string|null
+     */
+    public function lookupPostTypeInDatabase(string $query)
+    {
+        if ($ids = $this->getPostIdsFromQuery($query)) {
+            return $this->getPostTypeById($ids);
         }
     }
 

@@ -9,6 +9,9 @@ class Db
      */
     private $db;
 
+    /**
+     * Grabs the Wordpress WPDB class so we can use it to run queries
+     */
     public function __construct()
     {
         global $wpdb;
@@ -16,7 +19,14 @@ class Db
         $this->db = $wpdb;
     }
 
-    public function value($query, ...$args)
+    /**
+     * Returns a single column value from the query
+     *
+     * @param  string $query
+     * @param  any $args
+     * @return any
+     */
+    public function value(string $query, ...$args)
     {
         $results = $this->query($query, $args);
 
@@ -27,7 +37,14 @@ class Db
         return array_shift($results[0]);
     }
 
-    public function query($query, $args = [])
+    /**
+     * Executes the query and returns the result from it as an array
+     *
+     * @param  string $query
+     * @param  array  $args
+     * @return array
+     */
+    public function query(string $query, $args = [])
     {
         $query = str_replace(["'?'", '?'], "'%s'", $query);
 
