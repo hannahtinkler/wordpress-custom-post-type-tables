@@ -1,0 +1,19 @@
+{
+    "name": "hannahtinkler/custom-post-tables",
+    "description": "Facilitates storing custom post types and meta in their own tables",
+    "license": "Restricted",
+    "authors": [
+        {
+            "name": "Hannah Tinkler",
+            "email": "hannah.tinkler@gmail.com"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true
+    },
+    "autoload": {
+        "psr-4": {
+            "CptTables\\": ""
+        }
+    }
+}
