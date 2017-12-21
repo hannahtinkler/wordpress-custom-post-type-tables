@@ -35,7 +35,7 @@ class QueryFilters
      * @param  string $query
      * @return string
      */
-    public function updateQueryTables(string $query)
+    public function updateQueryTables(string $query) : string
     {
         $table = $this->determineTable($query);
 
@@ -100,7 +100,7 @@ class QueryFilters
      * @param  string $query
      * @return bool|string
      */
-    private function getPostIdsFromQuery(string $query)
+    private function getPostIdsFromQuery(string $query) : ?string
     {
         preg_match(
             sprintf(
@@ -123,7 +123,7 @@ class QueryFilters
      * @param  string $ids
      * @return string
      */
-    public function getPostTypeById($ids)
+    public function getPostTypeById($ids) : string
     {
         $key = __METHOD__ . $ids;
 

@@ -44,7 +44,7 @@ class Db
      * @param  array  $args
      * @return array
      */
-    public function query(string $query, $args = [])
+    public function query(string $query, $args = []) : array
     {
         $query = str_replace(["'?'", '?'], "'%s'", $query);
 

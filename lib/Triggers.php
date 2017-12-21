@@ -36,6 +36,11 @@ class Triggers
         $this->config = $config;
     }
 
+    /**
+     * Executes the methods required to set up all necessary triggers
+     * @param  array  $tables
+     * @return void
+     */
     public function create(array $tables)
     {
         $this->createPostTrigger($tables);
@@ -46,6 +51,7 @@ class Triggers
      * Creates a trigger on the new custom post type table that copies each new
      * row of data from the posts table to the custom table
      *
+     * @param  array  $tables
      * @return void
      */
     private function createPostTrigger(array $tables)
@@ -83,6 +89,7 @@ class Triggers
      * Creates a trigger on the new custom post type meta table that copies each
      * new row of data from the post meta table to the custom meta table
      *
+     * @param  array  $tables
      * @return void
      */
     private function createMetaTrigger(array $tables)

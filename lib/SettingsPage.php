@@ -4,12 +4,36 @@ namespace CptTables\Lib;
 
 class SettingsPage
 {
+    /**
+     * The menu and page name for this settings page
+     * @var string
+     */
     private $name = 'Custom Post Type Tables';
-    private $slug = 'ctp_tables';
-    private $filter = 'ctp_tables:settings_capability';
 
+    /**
+     * The slug for the settings page menu item
+     * @var string
+     */
+    private $slug = 'ctp_tables';
+
+    /**
+     * The option key that the enabled tables is stored in
+     * @var string
+     */
     private $enabledOption = 'ctp_tables:tables_enabled';
 
+    /**
+     * The filter that plugin users can hook into to customise capability
+     * required to access this page
+     *
+     * @var string
+     */
+    private $filter = 'ctp_tables:settings_capability';
+
+    /**
+     * The public WP post types to exclude from the settings page CPT list
+     * @var array
+     */
     private $exclude = [
         'post',
         'page',
@@ -106,7 +130,8 @@ class SettingsPage
     }
 
     /**
-     * @return [type]
+     * Gets the option that stores enabled post type tables and unserializes it
+     * @return array
      */
     public function getEnabledPostTypes() : array
     {

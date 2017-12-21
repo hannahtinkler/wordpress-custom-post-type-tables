@@ -18,7 +18,7 @@ class AdminFilters
      * @param  string $url
      * @return string
      */
-    public function updateAdminUrl(string $url)
+    public function updateAdminUrl(string $url) : string
     {
         if ($this->isAdminPage($url)) {
             $url .= sprintf(
@@ -35,7 +35,7 @@ class AdminFilters
      * @param  string  $url
      * @return boolean
      */
-    public function isAdminPage(string $url)
+    public function isAdminPage(string $url) : bool
     {
         $match = get_site_url(null, 'wp-admin/', 'admin') . 'post.php?';
 

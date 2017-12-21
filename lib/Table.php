@@ -26,6 +26,11 @@ class Table
         $this->config = $config;
     }
 
+    /**
+     * Executes the methods required to add the necessary tables
+     * @param  string $table
+     * @return void
+     */
     public function create(string $table)
     {
         $this->createPostTable($table);
@@ -36,9 +41,10 @@ class Table
      * Creates the new post table for the custom post type, basing the structure
      * on wp_posts
      *
+     * @param  array  $table
      * @return void
      */
-    private function createPostTable($table)
+    private function createPostTable(string $table)
     {
         $this->db->query(
             sprintf(
@@ -53,9 +59,10 @@ class Table
      * Creates the new postmeta table for the custom post type, basing the
      * structure on wp_postmeta
      *
+     * @param  array  $table
      * @return void
      */
-    private function createMetaTable($table)
+    private function createMetaTable(string $table)
     {
         $this->db->query(
             sprintf(
