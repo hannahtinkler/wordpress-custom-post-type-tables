@@ -11,6 +11,6 @@ When new posts are created, a row is inserted into the `wp_posts` table (as norm
 
 To minimise unecessary lookups when writing your own queries, specify the post type you are looking for whenever possible. This will allow the plugin to simply parse the table from the query without having to lookup the post type in the `wp_posts` table.
 
-## Filters
-###custom_post_type_tables:settings_capability:
+## Filter Hooks
+### custom_post_type_tables:settings_capability:
 Customise what capability the settings page should be limited to. Default is 'manage_options'.
