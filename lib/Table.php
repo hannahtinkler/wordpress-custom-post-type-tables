@@ -49,8 +49,8 @@ class Table
         $this->db->query(
             sprintf(
                 "CREATE TABLE IF NOT EXISTS %s LIKE %s",
-                $table,
-                $this->config['default_post_table']
+                $this->db->escape($table),
+                $this->db->escape($this->config['default_post_table'])
             )
         );
     }
@@ -67,8 +67,8 @@ class Table
         $this->db->query(
             sprintf(
                 "CREATE TABLE IF NOT EXISTS %s LIKE %s",
-                $table . '_meta',
-                $this->config['default_meta_table']
+                $this->db->escape($table . '_meta'),
+                $this->db->escape($this->config['default_meta_table'])
             )
         );
     }

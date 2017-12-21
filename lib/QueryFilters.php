@@ -133,7 +133,7 @@ class QueryFilters
             $cached = $this->db->value(
                 sprintf(
                     "SELECT post_type, ID as identifier FROM %s HAVING identifier IN (%s) LIMIT 1",
-                    $this->config['default_post_table'],
+                    $this->db->escape($this->config['default_post_table']),
                     implode(',', array_fill(0, count($ids), '?'))
                 ),
                 ...$ids

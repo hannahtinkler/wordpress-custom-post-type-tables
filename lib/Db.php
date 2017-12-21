@@ -2,6 +2,8 @@
 
 namespace CptTables\Lib;
 
+use Exception;
+
 class Db
 {
     /**
@@ -44,7 +46,7 @@ class Db
      * @param  array  $args
      * @return array
      */
-    public function query(string $query, $args = []) : array
+    public function query(string $query, $args = []) : ?array
     {
         $query = str_replace(["'?'", '?'], "'%s'", $query);
 
@@ -56,7 +58,21 @@ class Db
             $results = $this->db->get_results($query);
         }
 
+        if ($this->db->last_error) {
+            throw new Exception($this->db->last_error);
+        }
 
         return json_decode(json_encode($results), true);
+    }
+
+    /**
+     * Escapes variables for inclusion in queries where they are not values
+     *
+     * @param  any $var
+     * @return any
+     */
+    public function escape($var)
+    {
+        return esc_sql($var);
     }
 }
