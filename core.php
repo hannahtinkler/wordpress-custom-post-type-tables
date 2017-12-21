@@ -7,6 +7,7 @@ use CptTables\Lib\Table;
 use CptTables\Lib\Triggers;
 use CptTables\Lib\AdminFilters;
 use CptTables\Lib\QueryFilters;
+use CptTables\Lib\SettingsPage;
 
 class Core
 {
@@ -21,13 +22,6 @@ class Core
     public static $plugin_slug = 'custom-post-tables';
 
     /**
-     * @var string
-     */
-    public $flags = [
-        'CptTables\Core::setupCustomTables' => 'ctp_tables:custom_tables_added',
-    ];
-
-    /**
      * @return void
      */
     public function load()
@@ -37,36 +31,36 @@ class Core
         $self->db = new Db;
         $self->config = require(__DIR__ . '/config.php');
 
-        $self->setupCustomTables();
         $self->setupAdminFilters();
         $self->setupQueryFilters();
+        $self->setupSettingsPage();
     }
 
     /**
-     * Creates additional tables and sets up triggers to copy data over to them
      * @return void
      */
-    private function setupCustomTables()
-    {
-        if (!get_option($this->flags[__METHOD__])) {
-            foreach ($this->config['post_types'] as $postType) {
-                new Table($this->db, $this->config, $postType);
-            }
-
-            new Triggers($this->db, $this->config);
-
-            update_option($this->flags[__METHOD__], true, null, true);
-        }
-    }
-
     private function setupAdminFilters()
     {
         new AdminFilters;
     }
 
+    /**
+     * @return void
+     */
     private function setupQueryFilters()
     {
         new QueryFilters($this->db, $this->config);
+    }
+
+    /**
+     * @return void
+     */
+    private function setupSettingsPage()
+    {
+        new SettingsPage(
+            new Table($this->db, $this->config),
+            new Triggers($this->db, $this->config)
+        );
     }
 
     /**

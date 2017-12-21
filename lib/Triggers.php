@@ -34,9 +34,12 @@ class Triggers
     {
         $this->db = $db;
         $this->config = $config;
+    }
 
-        $this->createPostTrigger();
-        $this->createMetaTrigger();
+    public function create(array $tables)
+    {
+        $this->createPostTrigger($tables);
+        $this->createMetaTrigger($tables);
     }
 
     /**
@@ -45,8 +48,10 @@ class Triggers
      *
      * @return void
      */
-    private function createPostTrigger()
+    private function createPostTrigger(array $tables)
     {
+        $this->db->value("DROP TRIGGER IF EXISTS " . $this->postsTrigger);
+
         $query = sprintf(
             "CREATE TRIGGER %s
             AFTER INSERT ON %s FOR EACH ROW BEGIN ",
@@ -54,7 +59,7 @@ class Triggers
             $this->config['default_post_table']
         );
 
-        foreach ($this->config['post_types'] as $i => $table) {
+        foreach ($tables as $i => $table) {
             if ($i) {
                 $query .= 'ELSE';
             }
@@ -80,8 +85,10 @@ class Triggers
      *
      * @return void
      */
-    private function createMetaTrigger()
+    private function createMetaTrigger(array $tables)
     {
+        $this->db->value("DROP TRIGGER IF EXISTS " . $this->metaTrigger);
+
         $query = sprintf(
             "CREATE TRIGGER %s
             AFTER INSERT ON %s FOR EACH ROW BEGIN ",
@@ -89,7 +96,7 @@ class Triggers
             $this->config['default_meta_table']
         );
 
-        foreach ($this->config['post_types'] as $i => $table) {
+        foreach ($tables as $i => $table) {
             if ($i) {
                 $query .= 'ELSE';
             }

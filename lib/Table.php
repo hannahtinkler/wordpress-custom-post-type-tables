@@ -20,14 +20,16 @@ class Table
      * @param array  $config
      * @param string $table
      */
-    public function __construct(Db $db, array $config, string $table)
+    public function __construct(Db $db, array $config)
     {
         $this->db = $db;
-        $this->table = $table;
         $this->config = $config;
+    }
 
-        $this->createPostTable();
-        $this->createMetaTable();
+    public function create(string $table)
+    {
+        $this->createPostTable($table);
+        $this->createMetaTable($table);
     }
 
     /**
@@ -36,12 +38,12 @@ class Table
      *
      * @return void
      */
-    private function createPostTable()
+    private function createPostTable($table)
     {
         $this->db->query(
             sprintf(
                 "CREATE TABLE IF NOT EXISTS %s LIKE %s",
-                $this->table,
+                $table,
                 $this->config['default_post_table']
             )
         );
@@ -53,12 +55,12 @@ class Table
      *
      * @return void
      */
-    private function createMetaTable()
+    private function createMetaTable($table)
     {
         $this->db->query(
             sprintf(
                 "CREATE TABLE IF NOT EXISTS %s LIKE %s",
-                $this->table . '_meta',
+                $table . '_meta',
                 $this->config['default_meta_table']
             )
         );
