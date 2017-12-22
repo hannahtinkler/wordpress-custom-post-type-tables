@@ -30,7 +30,7 @@ class Db
      */
     public function value(string $query, ...$args)
     {
-        $results = $this->query($query, $args);
+        $results = $this->query($query, ...$args);
 
         if (empty($results[0]) || !is_array($results[0])) {
             return;
@@ -46,13 +46,13 @@ class Db
      * @param  array  $args
      * @return array
      */
-    public function query(string $query, $args = []) : ?array
+    public function query(string $query, ...$args) : ?array
     {
-        $query = str_replace(["'?'", '?'], "'%s'", $query);
+        $query = $this->formatQueryForWpdb($query);
 
         if ($args) {
             $results = $this->db->get_results(
-                $this->db->prepare($query, $args)
+                $this->db->prepare($query, ...$args)
             );
         } else {
             $results = $this->db->get_results($query);
@@ -63,6 +63,11 @@ class Db
         }
 
         return json_decode(json_encode($results), true);
+    }
+
+    public function formatQueryForWpdb(string $query) : string
+    {
+        return str_replace(["'?'", '?'], "'%s'", $query);
     }
 
     /**
