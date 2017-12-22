@@ -71,7 +71,7 @@ class QueryFilters
      * @param  string $query
      * @return bool|string
      */
-    private function getPostTypeFromQuery(string $query)
+    public function getPostTypeFromQuery(string $query)
     {
         preg_match("/`?post_type`?\s*=\s*'([a-zA-Z]*)'/", $query, $postType);
 
@@ -100,7 +100,7 @@ class QueryFilters
      * @param  string $query
      * @return bool|string
      */
-    private function getPostIdsFromQuery(string $query) : ?string
+    public function getPostIdsFromQuery(string $query) : ?string
     {
         preg_match(
             sprintf(

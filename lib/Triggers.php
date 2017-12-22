@@ -84,7 +84,7 @@ class Triggers
 
         $query .= "END IF; END";
 
-        $this->db->query($query, $params);
+        $this->db->query($query, ...$params);
     }
 
     /**
@@ -125,6 +125,6 @@ class Triggers
 
         $query .= "END IF; END";
 
-        $this->db->query($query, $params);
+        $this->db->query($query, ...$params);
     }
 }
