@@ -10,6 +10,7 @@ return array(
     'CptTables\\Lib\\AdminFilters' => $baseDir . '/lib/AdminFilters.php',
     'CptTables\\Lib\\Db' => $baseDir . '/lib/Db.php',
     'CptTables\\Lib\\QueryFilters' => $baseDir . '/lib/QueryFilters.php',
+    'CptTables\\Lib\\SettingsPage' => $baseDir . '/lib/SettingsPage.php',
     'CptTables\\Lib\\Table' => $baseDir . '/lib/Table.php',
-    'CptTables\\Lib\\Trigger' => $baseDir . '/lib/Trigger.php',
+    'CptTables\\Lib\\Triggers' => $baseDir . '/lib/Triggers.php',
 );

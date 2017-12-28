@@ -54,6 +54,7 @@ class SettingsPage
 
         if (isset($_POST['cpt_tables:submitted'])) {
             $this->saveSettings();
+            exit;
         }
 
         add_filter('admin_menu', [$this, 'addSettingsPage']);
@@ -110,8 +111,6 @@ class SettingsPage
         }
 
         wp_redirect($_SERVER['REQUEST_URI'] . '&success=true');
-
-        exit;
     }
 
     /**
