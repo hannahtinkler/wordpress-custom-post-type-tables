@@ -40,6 +40,8 @@ class QueryFilters
         $table = $this->determineTable($query);
 
         if ($table && in_array($table, $this->config['post_types'])) {
+            $table = str_replace('-', '_', $table);
+
             $query = str_replace($this->config['default_post_table'], $table, $query);
             $query = str_replace($this->config['default_meta_table'], $table . '_meta', $query);
         }
@@ -57,11 +59,11 @@ class QueryFilters
     private function determineTable(string $query)
     {
         if ($table = $this->getPostTypeFromQuery($query)) {
-            return str_replace('-', '_', $table);
+            return $table;
         }
 
         if ($table = $this->lookupPostTypeInDatabase($query)) {
-            return str_replace('-', '_', $table);
+            return $table;
         }
     }
 
@@ -118,7 +120,8 @@ class QueryFilters
     }
 
     /**
-     * Looks up post in wp_posts
+     * Looks up post type in wp_posts. Caches the response, and if more than one id
+     * is provided, also cache the result against each individual ID.
      *
      * @param  string $ids
      * @return string
@@ -140,6 +143,12 @@ class QueryFilters
             );
 
             wp_cache_set($key, $cached);
+
+            if (count($ids)) {
+                foreach ((array) $ids as $id) {
+                    wp_cache_set(__METHOD__ . $id, $cached);
+                }
+            }
         }
 
         return $cached;
