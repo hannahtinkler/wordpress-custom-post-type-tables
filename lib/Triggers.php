@@ -67,6 +67,8 @@ class Triggers
         );
 
         foreach ($tables as $i => $table) {
+            $table = str_replace('-', '_', $table);
+
             if ($i) {
                 $query .= 'ELSE';
             }
@@ -107,6 +109,8 @@ class Triggers
         );
 
         foreach ($tables as $i => $table) {
+            $table = str_replace('-', '_', $table);
+            
             if ($i) {
                 $query .= 'ELSE';
             }

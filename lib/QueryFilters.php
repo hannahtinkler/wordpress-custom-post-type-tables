@@ -57,11 +57,11 @@ class QueryFilters
     private function determineTable(string $query)
     {
         if ($table = $this->getPostTypeFromQuery($query)) {
-            return $table;
+            return str_replace('-', '_', $table);
         }
 
         if ($table = $this->lookupPostTypeInDatabase($query)) {
-            return $table;
+            return str_replace('-', '_', $table);
         }
     }
 

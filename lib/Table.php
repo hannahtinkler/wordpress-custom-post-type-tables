@@ -33,6 +33,8 @@ class Table
      */
     public function create(string $table)
     {
+        $table = str_replace('-', '_', $table);
+        
         $this->createPostTable($table);
         $this->createMetaTable($table);
     }

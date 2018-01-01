@@ -14,7 +14,7 @@ class SettingsPage
      * The slug for the settings page menu item
      * @var string
      */
-    private $slug = 'ctp_tables';
+    private $slug = 'cpt_tables';
 
     /**
      * The option key that the enabled tables is stored in
