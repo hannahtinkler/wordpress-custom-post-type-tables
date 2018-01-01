@@ -123,7 +123,7 @@ class QueryFilters
      * @param  string $ids
      * @return string
      */
-    public function getPostTypeById($ids) : string
+    public function getPostTypeById($ids) : ?string
     {
         $key = __METHOD__ . $ids;
 
