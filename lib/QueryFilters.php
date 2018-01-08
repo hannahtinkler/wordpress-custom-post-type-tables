@@ -106,7 +106,11 @@ class QueryFilters
     {
         preg_match(
             sprintf(
-                "/(?:SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*IN\s\(+\s*'?([\d\s,]*)'?\)|SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*=+\s*'?(\d*)'?)/",
+                "/(?:SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*IN\s\(+\s*'?([\d\s,]*)'?\)"
+                . "|SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*=+\s*'?(\d*)'?"
+                . "|UPDATE.*(?:%s|%s).*WHERE.*`?(?:ID|post_id)+`?\s*=+\s*'?(\d*)'?)/",
+                $this->config['default_post_table'],
+                $this->config['default_meta_table'],
                 $this->config['default_post_table'],
                 $this->config['default_meta_table'],
                 $this->config['default_post_table'],
