@@ -44,6 +44,7 @@ class QueryFilters
 
             $query = str_replace($this->config['default_post_table'], $table, $query);
             $query = str_replace($this->config['default_meta_table'], $table . '_meta', $query);
+
         }
 
         return $query;
@@ -104,21 +105,24 @@ class QueryFilters
      */
     public function getPostIdsFromQuery(string $query) : ?string
     {
-        preg_match(
-            sprintf(
-                "/(?:SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*IN\s\(+\s*'?([\d\s,]*)'?\)"
-                . "|SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*=+\s*'?(\d*)'?"
-                . "|UPDATE.*(?:%s|%s).*WHERE.*`?(?:ID|post_id)+`?\s*=+\s*'?(\d*)'?)/",
-                $this->config['default_post_table'],
-                $this->config['default_meta_table'],
-                $this->config['default_post_table'],
-                $this->config['default_meta_table'],
-                $this->config['default_post_table'],
-                $this->config['default_meta_table']
-            ),
-            $query,
-            $ids
-        );
+        preg_match(sprintf(
+            "/(?:SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*IN\s\(+\s*'?([\d\s,]*)'?\)"
+            .  "|SELECT.*FROM\s(?:%s|%s)\s*WHERE.*(?:ID|post_id)+\s*=+\s*'?(\d*)'?"
+            .  "|UPDATE.*(?:%s|%s).*WHERE.*`?(?:ID|post_id)+`?\s*=+\s*'?(\d*)'?"
+            .  "|INSERT INTO.*\s`?%s`?\s\(`post_id`, `meta_key`, `meta_value`\){1,1}\s*VALUES\s*\((\d*),"
+            . ")/",
+            $this->config['default_post_table'],
+            $this->config['default_meta_table'],
+            $this->config['default_post_table'],
+            $this->config['default_meta_table'],
+            $this->config['default_post_table'],
+            $this->config['default_meta_table'],
+            $this->config['default_meta_table']
+        ), $query, $ids);
+
+        if (!isset($ids)) {
+            return false;
+        }
 
         return array_pop($ids);
     }
