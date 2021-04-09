@@ -1,7 +1,7 @@
 {
     "name": "hannahtinkler/custom-post-tables",
     "description": "Facilitates storing custom post types and meta in their own tables",
-    "license": "Restricted",
+    "license": "MIT",
     "authors": [
         {
             "name": "Hannah Tinkler",
