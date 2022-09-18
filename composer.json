@@ -1,6 +1,8 @@
 {
     "name": "hannahtinkler/custom-post-tables",
+    "type": "wordpress-plugin",
     "description": "Facilitates storing custom post types and meta in their own tables",
+    "keywords": ["wordpress", "plugin"],
     "license": "MIT",
     "authors": [
         {
